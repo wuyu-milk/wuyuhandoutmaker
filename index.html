@@ -116,13 +116,15 @@
         .font-chk-box { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; padding: 12px 14px; background: var(--bg-field); border-radius: var(--radius-sm); border: 1px solid var(--border-input); }
         .font-chk-box label { font-size: 13px; display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; color: var(--text-main); user-select: none; }
         
+        /* 2.3 버전 버튼 컬러 스타일 적용 */
         .btn-group { margin-top: 10px; margin-bottom: 0px; display: flex; gap: 12px; }
         button.action-btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; padding: 12px; border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
         button.action-btn:active { transform: translateY(2px); box-shadow: none; }
-        .btn-primary { background-color: var(--primary); color: #111; }
-        .btn-primary:hover { background-color: var(--primary-hover); }
-        .btn-secondary { background-color: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color); }
-        .btn-secondary:hover { background-color: var(--bg-btn-clear); }
+        .btn-primary { background-color: #003FD1; color: #fff; }
+        .btn-primary:hover { background-color: #D10000; }
+        .btn-secondary { background-color: #393B84; color: #fff; }
+        .btn-secondary:hover { background-color: #dedede; color: #1e1e24; }
+        
         .btn-clear { flex: none; width: 36px; height: 36px; padding: 0; background-color: var(--bg-btn-clear); color: #fff; display: flex; justify-content: center; align-items: center; border-radius: var(--radius-sm); font-size: 14px; font-weight: bold; border: 1px solid var(--border-color); box-shadow: none; cursor: pointer;}
         .btn-clear:hover { background-color: #1a1c5b; color: white; border-color: #1a1c5b; }
 
@@ -339,13 +341,14 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                         <div style="flex: 1;"><span class="sub-label">세로 높이</span><input type="number" id="iTopImgH" value="250"></div>
                     </div>
                     <div><span class="sub-label"><span>가로 크롭 (X)</span><span id="iTopPosXVal">50%</span></span><input type="range" id="iTopPosX" min="0" max="100" value="50"></div>
+                    <!-- id 오타 수정: iBotPosY -> iTopPosY -->
                     <div><span class="sub-label"><span>세로 크롭 (Y)</span><span id="iTopPosYVal">50%</span></span><input type="range" id="iTopPosY" min="0" max="100" value="50"></div>
                     <label class="checkbox-group"><input type="checkbox" id="iTopGradient" checked><span>하단 방향 투명 그라데이션</span></label>
                     <div><span class="sub-label"><span>투명 범위 조절 (시작점)</span><span id="iTopGradValTxt">60%</span></span><input type="range" id="iTopGradRange" min="0" max="99" value="60"></div>
                     
                     <div class="btn-group" style="margin-top: 10px;">
-                        <button class="action-btn btn-secondary" onclick="copyIntroImage('top')">복사</button>
-                        <button class="action-btn btn-primary" onclick="downloadIntroImage('top')">다운로드</button>
+                        <button class="action-btn btn-secondary" data-action="copyIntro" data-target="top">복사</button>
+                        <button class="action-btn btn-primary" data-action="downloadIntro" data-target="top">다운로드</button>
                     </div>
                 </div>
 
@@ -353,7 +356,7 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                     <label>중앙 꾸밈 이미지 (선택)</label>
                     <div style="display: flex; gap: 8px;">
                         <input type="text" id="iMidImgUrl" placeholder="이미지 URL 입력 (투명 배경 권장)" value="" style="flex: 1;">
-                        <button type="button" class="btn-clear" onclick="clearImageInput('iMidImgUrl', 'iMidImgFile')">✕</button>
+                        <button type="button" class="btn-clear" data-action="clear" data-target="iMidImgUrl,iMidImgFile">✕</button>
                     </div>
                     <input type="file" id="iMidImgFile" accept="image/*">
                     <div style="display: flex; gap: 12px; margin-top: 4px;">
@@ -366,8 +369,8 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                     <div><span class="sub-label"><span>투명 범위 조절 (중심부 넓이)</span><span id="iMidGradValTxt">60%</span></span><input type="range" id="iMidGradRange" min="0" max="99" value="60"></div>
                     
                     <div class="btn-group" style="margin-top: 10px;">
-                        <button class="action-btn btn-secondary" onclick="copyIntroImage('mid')">복사</button>
-                        <button class="action-btn btn-primary" onclick="downloadIntroImage('mid')">다운로드</button>
+                        <button class="action-btn btn-secondary" data-action="copyIntro" data-target="mid">복사</button>
+                        <button class="action-btn btn-primary" data-action="downloadIntro" data-target="mid">다운로드</button>
                     </div>
                 </div>
 
@@ -375,7 +378,7 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                     <label>하단 이미지</label>
                     <div style="display: flex; gap: 8px;">
                         <input type="text" id="iBotImgUrl" placeholder="이미지 URL 입력" value="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=700&auto=format&fit=crop" style="flex: 1;">
-                        <button type="button" class="btn-clear" onclick="clearImageInput('iBotImgUrl', 'iBotImgFile')">✕</button>
+                        <button type="button" class="btn-clear" data-action="clear" data-target="iBotImgUrl,iBotImgFile">✕</button>
                     </div>
                     <input type="file" id="iBotImgFile" accept="image/*">
                     <div style="display: flex; gap: 12px; margin-top: 4px;">
@@ -388,8 +391,8 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                     <div><span class="sub-label"><span>투명 범위 조절 (시작점)</span><span id="iBotGradValTxt">60%</span></span><input type="range" id="iBotGradRange" min="0" max="99" value="60"></div>
                     
                     <div class="btn-group" style="margin-top: 10px;">
-                        <button class="action-btn btn-secondary" onclick="copyIntroImage('bot')">복사</button>
-                        <button class="action-btn btn-primary" onclick="downloadIntroImage('bot')">다운로드</button>
+                        <button class="action-btn btn-secondary" data-action="copyIntro" data-target="bot">복사</button>
+                        <button class="action-btn btn-primary" data-action="downloadIntro" data-target="bot">다운로드</button>
                     </div>
                 </div>
             </div>
@@ -664,7 +667,6 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                         const headerCols = headerText.split('|').map(c => c.trim());
                         const colCount = headerCols.length;
 
-                        // 동적 헤더 HTML 생성
                         const headerRowHTML = `
                             <tr style="background-color: ${fg}22; border-bottom: 2px solid ${fg};">
                                 ${headerCols.map((col, idx) => `
@@ -673,7 +675,6 @@ roll20에 서식 붙여넣기를 할 경우 기울기는 삭제됩니다.</texta
                             </tr>
                         `;
 
-                        // 동적 본문 <td> 매핑
                         const rows = document.getElementById('rData').value.split('\n').map(row => {
                             const cols = row.split('|').map(c => c.trim());
                             if (cols.length < 1 || (cols.length === 1 && cols[0] === '')) return '';
